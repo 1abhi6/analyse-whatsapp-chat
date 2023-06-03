@@ -8,6 +8,7 @@ Created on Sat Jun  3 20:01:33 2023
 import streamlit as st
 
 from preprocessor import Preprocess
+from analysis import Analyse
 
 class Main:
     def __init__(self):
@@ -22,3 +23,10 @@ class Main:
             preprocessor_obj = Preprocess(data)
             self.df = preprocessor_obj.text_to_df()
             
+            analysis_obj = Analyse(self.df)
+            users_list = analysis_obj.user_list() 
+            st.sidebar.selectbox('Show Analysis',users_list)
+
+
+Main()
+
