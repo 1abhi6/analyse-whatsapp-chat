@@ -15,7 +15,7 @@ class Main:
         
         st.sidebar.title('WhatsApp Chat Analyser')
         
-        upload_file = st.sidebar.file_uploader('Choose a file')
+        upload_file = st.sidebar.file_uploader('Choose a text file')
         if upload_file is not None:
             bytes_data = upload_file.getvalue()
             data = bytes_data.decode('utf-8')
@@ -26,6 +26,12 @@ class Main:
             analysis_obj = Analyse(self.df)
             users_list = analysis_obj.user_list() 
             st.sidebar.selectbox('Show Analysis',users_list)
+            
+            self.show_analysis()
+            
+    def show_analysis(self):
+        if st.sidebar.button('Show Analysis'):
+            pass
 
 
 Main()

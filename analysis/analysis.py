@@ -13,4 +13,7 @@ class Analyse:
     # Fetch user list from the dataframe
     def user_list(self):
         user_list = self.df['users'].unique().tolist()
+        user_list.remove('Group Notification')
+        user_list.insert(0,'Overall')
+        
         return user_list
