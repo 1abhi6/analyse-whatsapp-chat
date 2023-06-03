@@ -9,7 +9,16 @@ import streamlit as st
 
 from preprocessor import Preprocess
 
-st.title("HEllo")
-dt = 'hello'
-
-print(dt)
+class Main:
+    def __init__(self):
+        
+        st.sidebar.title('WhatsApp Chat Analyser')
+        
+        upload_file = st.sidebar.file_uploader('Choose a file')
+        if upload_file is not None:
+            bytes_data = upload_file.getvalue()
+            data = bytes_data.decode('utf-8')
+            
+            preprocessor_obj = Preprocess(data)
+            self.df = preprocessor_obj.text_to_df()
+            
