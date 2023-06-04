@@ -2,7 +2,7 @@
 """
 Created on Sat Jun  3 20:01:33 2023
 
-@author: Abhishek
+@author: Abhishek Santosh Gupta
 """
 
 import streamlit as st
