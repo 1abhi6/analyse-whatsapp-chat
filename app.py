@@ -64,10 +64,12 @@ class Main(Sidebar):
             st.metric(label='Total Words',value=total_words)
             
         with col3:
-            st.write('Col3')
+            media_shared = self.analysis_obj.media_shared()
+            st.metric(label='Media Shared',value=media_shared)
             
         with col4:
-            st.write('Col4')
+            links_shared = self.analysis_obj.links_shared()
+            st.metric(label='Links Shared',value=links_shared)
     
 
 Main()
