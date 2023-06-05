@@ -14,7 +14,7 @@ from analysis import GroupSpecificAnalysis
 
 class PlotBarChart:
     def __init__(self, df, x_axis, y_axis):
-        fig = px.bar(df, x='name', y='amount')
+        fig = px.bar(df, x=x_axis, y=y_axis)
         st.plotly_chart(fig, use_container_width=True)
 
 
@@ -27,4 +27,4 @@ class GroupPlot:
 
     def plot_most_active_users(self):
         users = self.group_specific_analysis.most_active_users()
-        PlotBarChart(users, 'User Name', 'Number of Chats')
+        PlotBarChart(df=users, x_axis='Users', y_axis='Number of Chats')

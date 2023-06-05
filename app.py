@@ -28,9 +28,10 @@ class Sidebar(ABC):
                 self.analysis_obj = Analyse(self.df, self.selected_user)
                 self.show_analysis_btn()
 
-            except Exception:
-                st.sidebar.error(
-                    'Invalid file format, The file should be Whatsapp exported .txt file.')
+            except Exception as e:
+                # st.sidebar.error(
+                    # 'Invalid file format, The file should be Whatsapp exported .txt file.')
+                st.error(e)
 
     @abstractmethod
     def show_analysis_btn(self):
@@ -47,7 +48,10 @@ class Main(Sidebar):
                 st.title('Overall Analysis')
             else:
                 st.title("{}'s Analysis".format(self.selected_user))
+            self.groupy_plot = GroupPlot(self.df,self.selected_user)
+            
             self.quick_metric()
+            self.plot_most_active_users()
 
     def quick_metric(self):
         col1, col2, col3, col4 = st.columns(4)
@@ -67,7 +71,8 @@ class Main(Sidebar):
         with col4:
             links_shared = self.analysis_obj.links_shared()
             st.metric(label='Links Shared', value=links_shared)
-
-
+        
+    def plot_most_active_users(self):
+        self.groupy_plot.plot_most_active_users()
 if __name__ == '__main__':
     Main()

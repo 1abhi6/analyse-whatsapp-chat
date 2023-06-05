@@ -59,4 +59,10 @@ class GroupSpecificAnalysis(Analyse):
         users = self.df['users'].value_counts().sort_values(
             ascending=False
         ).reset_index().head(5)
+
+        users.rename(columns={
+            'index': 'Users',
+            'users': 'Number of Chats'
+        }, inplace=True)
+        
         return users
