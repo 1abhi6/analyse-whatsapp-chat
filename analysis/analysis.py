@@ -8,6 +8,7 @@ import pandas as pd
 
 from urlextract import URLExtract
 
+
 class UserList:
     def __init__(self, df):
         self.df = df
@@ -44,10 +45,18 @@ class Analyse(UserList):
             (self.df['message'] == '<Media omitted>') |
             (self.df['message'] == '<Media omitted\n>')
         ].shape[0])
-    
+
     def links_shared(self):
         links = []
         for message in self.df['message']:
             links.extend(self.extract_url.find_urls(message))
-        
+
         return len(links)
+
+
+class GroupSpecificAnalysis(Analyse):
+    def most_active_users(self):
+        users = self.df['users'].value_counts().sort_values(
+            ascending=False
+        ).reset_index().head(5)
+        return users
