@@ -65,6 +65,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 For any inquiries or feedback, please contact:
-- Abhishek Gupta: [abhi@getifyme@gmail.com](mailto:abhi@getifyme@gmail.com)
+- Abhishek Gupta: [abhi@getifyme.com](mailto:abhi@getifyme.com)
 
 Feel free to reach out with any questions, suggestions, or collaboration opportunities. Happy analyzing!
