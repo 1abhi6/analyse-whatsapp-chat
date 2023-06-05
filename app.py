@@ -25,8 +25,8 @@ class Sidebar(ABC):
                 self.analysis_obj = Analyse(self.df, self.selected_user)
                 
                 self.show_analysis_btn()
-            except Exception as e:
-                st.sidebar.error(f"Error occurred: {str(e)}")
+            except Exception:
+                st.sidebar.error('Invalid file,\nPlease input a valid Whatsapp exported txt file.')
     
     @abstractmethod
     def show_analysis_btn(self):
