@@ -6,7 +6,7 @@ from analysis import (Analyse,
                       UserList,
                       GroupSpecificAnalysis
                       )
-from components import GroupPlot, PADDING_TOP
+from components import Plot, PADDING_TOP
 
 
 class Sidebar(ABC):
@@ -84,12 +84,14 @@ class Main(Sidebar):
                 self.group_specific_analysis = GroupSpecificAnalysis(
                     self.df, self.selected_user)
 
-            self.groupy_plot = GroupPlot(self.df, self.selected_user)
+            self.plot = Plot(self.df, self.selected_user)
 
             st.divider()
             self.quick_metric()
             st.divider()
             self.plot_most_active_users()
+            st.divider()
+            self.plot_word_cloud()
 
     def quick_metric(self):
         st.subheader('Quick Metrices',
@@ -119,7 +121,7 @@ class Main(Sidebar):
             with col1:
                 st.subheader('Most Active Users',
                              help='Most active user with number of chats')
-                self.groupy_plot.plot_most_active_users()
+                self.plot.plot_most_active_users()
 
             with col2:
                 st.subheader('Most Active Users (Percentage)',
@@ -127,6 +129,11 @@ class Main(Sidebar):
 
                 users = self.group_specific_analysis.most_active_users_percentage()
                 st.dataframe(users)
+
+    def plot_word_cloud(self):
+        st.subheader('Frequently Used Words',
+                     help='Wrod cloud of frequently used words')
+        self.plot.plot_word_cloud()
 
 
 if __name__ == '__main__':

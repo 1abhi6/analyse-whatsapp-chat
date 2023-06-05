@@ -52,6 +52,17 @@ class Analyse(UserList):
             links.extend(self.extract_url.find_urls(message))
 
         return len(links)
+    
+    def word_cloud(self):
+        self.df = pd.DataFrame(self.df['message'])
+
+        # Combine all the messages into a single string
+        text = ' '.join(self.df['message'].tolist())
+        
+        # Remove '<Media omitted>' from the text
+        text = text.replace('<Media omitted>', '')  
+        
+        return text
 
 
 class GroupSpecificAnalysis(Analyse):       
