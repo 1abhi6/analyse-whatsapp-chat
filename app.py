@@ -2,8 +2,11 @@ import streamlit as st
 from abc import ABC, abstractmethod
 
 from preprocessor import Preprocess
-from analysis import Analyse, UserList
-from components import GroupPlot
+from analysis import (Analyse,
+                      UserList,
+                      GroupSpecificAnalysis
+                      )
+from components import GroupPlot, PADDING_TOP
 
 
 class Sidebar(ABC):
@@ -26,12 +29,14 @@ class Sidebar(ABC):
                 self.selected_user = st.sidebar.selectbox(
                     'Show Analysis', users_list)
                 self.analysis_obj = Analyse(self.df, self.selected_user)
+
                 self.show_analysis_btn()
 
             except Exception as e:
                 # st.sidebar.error(
-                    # 'Invalid file format, The file should be Whatsapp exported .txt file.')
-                st.error(e)
+                #     'Invalid file format, The file should be Whatsapp exported .txt file.'
+                # )
+                st.sidebar.error(e)
 
     @abstractmethod
     def show_analysis_btn(self):
@@ -40,20 +45,56 @@ class Sidebar(ABC):
 
 class Main(Sidebar):
     def __init__(self):
+
+        # Page configuration
+        st.set_page_config(
+            layout='wide', page_title="Abhi's WhatsApp Analyser", page_icon='📊')
         super().__init__()
 
     def show_analysis_btn(self):
         if st.sidebar.button('Show Analysis'):
-            if self.selected_user == 'Overall':
-                st.title('Overall Analysis')
+            if not self.selected_user == 'Overall':
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.write()
+
+                with col2:
+                    # Give custom padding at top
+                    st.markdown(PADDING_TOP, unsafe_allow_html=True)
+
+                    st.title("{}'s Analysis".format(self.selected_user))
+
+                with col3:
+                    st.write()
+
             else:
-                st.title("{}'s Analysis".format(self.selected_user))
-            self.groupy_plot = GroupPlot(self.df,self.selected_user)
-            
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.write()
+
+                with col2:
+                    # Give custom padding at top
+                    st.markdown(PADDING_TOP, unsafe_allow_html=True)
+
+                    st.title('Overall Analysis')
+
+                with col3:
+                    st.write()
+
+                self.group_specific_analysis = GroupSpecificAnalysis(
+                    self.df, self.selected_user)
+
+            self.groupy_plot = GroupPlot(self.df, self.selected_user)
+
+            st.divider()
             self.quick_metric()
+            st.divider()
             self.plot_most_active_users()
 
     def quick_metric(self):
+        st.subheader('Quick Metrices',
+                     help='Quick overview of the entire chat')
+
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
@@ -71,8 +112,22 @@ class Main(Sidebar):
         with col4:
             links_shared = self.analysis_obj.links_shared()
             st.metric(label='Links Shared', value=links_shared)
-        
+
     def plot_most_active_users(self):
-        self.groupy_plot.plot_most_active_users()
+        if self.selected_user == 'Overall':
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader('Most Active Users',
+                             help='Most active user with number of chats')
+                self.groupy_plot.plot_most_active_users()
+
+            with col2:
+                st.subheader('Most Active Users (Percentage)',
+                             help='Most active user with percentage of chats')
+
+                users = self.group_specific_analysis.most_active_users_percentage()
+                st.dataframe(users)
+
+
 if __name__ == '__main__':
     Main()

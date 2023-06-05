@@ -54,15 +54,22 @@ class Analyse(UserList):
         return len(links)
 
 
-class GroupSpecificAnalysis(Analyse):
+class GroupSpecificAnalysis(Analyse):       
     def most_active_users(self):
         users = self.df['users'].value_counts().sort_values(
             ascending=False
-        ).reset_index().head(5)
+        ).reset_index().head()
 
         users.rename(columns={
-            'index': 'Users',
+            'index': 'User Name',
             'users': 'Number of Chats'
         }, inplace=True)
-        
+
+        return users
+
+    def most_active_users_percentage(self):
+        users = round((self.df['users'].value_counts(
+            ) / self.df.shape[0]) * 100, 2).reset_index().rename(
+            columns={'index': 'User Name', 'users': 'Chat Percentage'})
+                
         return users

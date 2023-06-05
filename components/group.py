@@ -27,4 +27,4 @@ class GroupPlot:
 
     def plot_most_active_users(self):
         users = self.group_specific_analysis.most_active_users()
-        PlotBarChart(df=users, x_axis='Users', y_axis='Number of Chats')
+        PlotBarChart(df=users, x_axis='User Name', y_axis='Number of Chats')
