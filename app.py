@@ -52,7 +52,8 @@ class Main(Sidebar):
         super().__init__()
 
     def show_analysis_btn(self):
-        if st.sidebar.button('Show Analysis'):
+        if st.sidebar.button('Show Chat Analysis'):
+            
             if not self.selected_user == 'Overall':
                 col1, col2, col3 = st.columns(3)
                 with col1:
@@ -76,7 +77,7 @@ class Main(Sidebar):
                     # Give custom padding at top
                     st.markdown(PADDING_TOP, unsafe_allow_html=True)
 
-                    st.title('Overall Analysis')
+                    st.title('Overall Chat Analysis')
 
                 with col3:
                     st.write()
