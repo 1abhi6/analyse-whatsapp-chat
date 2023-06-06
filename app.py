@@ -89,7 +89,6 @@ class Main(Sidebar):
 
             st.divider()
             self.quick_metric()
-            st.divider()
             self.plot_most_active_users()
             st.divider()
             self.plot_word_cloud()
@@ -120,18 +119,19 @@ class Main(Sidebar):
 
     def plot_most_active_users(self):
         if self.selected_user == 'Overall':
+            st.divider()
             col1, col2 = st.columns(2)
             with col1:
-                st.subheader('Most Active Users',
-                             help='Most active user with number of chats')
-                self.plot.plot_most_active_users()
-
-            with col2:
                 st.subheader('Most Active Users (Percentage)',
                              help='Most active user with percentage of chats')
 
                 users = self.group_specific_analysis.most_active_users_percentage()
                 st.dataframe(users)
+                
+            with col2:
+                st.subheader('Most Active Users',
+                             help='Most active user with number of chats')
+                self.plot.plot_most_active_users()
 
     def plot_word_cloud(self):
         st.subheader('Frequently Used Words',
@@ -140,6 +140,8 @@ class Main(Sidebar):
         
     
     def most_common_words(self):
+        st.subheader('Most Used Words with Frequency',
+                     help='Table of top 20 frequently used words')
         most_common_df = self.analysis_obj.most_common_words()
         st.dataframe(most_common_df)
 
