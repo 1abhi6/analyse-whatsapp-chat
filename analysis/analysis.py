@@ -117,7 +117,7 @@ class Analyse(UserList):
             1: 'Frequency'
         }, inplace=True)
 
-        return most_used_emojis
+        return most_used_emojis.head(20)
 
 
 class GroupSpecificAnalysis(Analyse):
