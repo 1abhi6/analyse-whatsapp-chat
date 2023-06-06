@@ -1,4 +1,4 @@
-# WhatsApp Chat Analyzer
+# Abhi's WhatsApp Chat Analyzer
 
 ## Description
 WhatsApp Chat Analyzer is a Python-based project that allows you to analyze exported text files from WhatsApp chats, whether they are individual or group chats. The project aims to provide insightful analysis and visualizations based on the chat data. It utilizes various libraries such as numpy, pandas, plotly, streamlit, and more to facilitate data manipulation, analysis, and visualization.
