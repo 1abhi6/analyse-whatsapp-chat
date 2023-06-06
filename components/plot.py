@@ -39,12 +39,15 @@ class PlotBarChart:
 
         # Define a color palette for the bars
         colors = ['rgba(0, 255, 255, 0.6)', 'rgba(0, 0, 255, 0.6)',
-                  'rgba(255, 165, 0, 0.6)', 'rgba(128, 0, 128, 0.6)','rgba(0, 128, 0, 0.6)' ,
+                  'rgba(255, 165, 0, 0.6)', 'rgba(128, 0, 128, 0.6)', 'rgba(0, 128, 0, 0.6)',
                   'rgba(255, 255, 0, 0.6)', 'rgba(255, 0, 255, 0.6)', 'rgba(0, 128, 128, 0.6)',
                   'rgba(128, 128, 0, 0.6)', 'rgba(0, 0, 128, 0.6)', 'rgba(128, 0, 0, 0.6)',
                   'rgba(0, 255, 0, 0.6)', 'rgba(0, 0, 128, 0.6)', 'rgba(255, 0, 0, 0.6)',
                   'rgba(255, 255, 255, 0.6)', 'rgba(128, 128, 128, 0.6)', 'rgba(128, 0, 128, 0.6)',
-                  'rgba(255, 255, 0, 0.6)', 'rgba(0, 255, 255, 0.6)', 'rgba(255, 0, 255, 0.6)']
+                  'rgba(255, 255, 0, 0.6)', 'rgba(0, 255, 255, 0.6)', 'rgba(255, 0, 255, 0.6)',
+                  'rgba(0, 255, 255, 0.9)', 'rgba(0, 0, 255, 0.9)', 'rgba(255, 0, 0, 0.9)',
+                  'rgba(255, 165, 0, 0.6)', 'rgba(128, 0, 128, 0.6)', 'rgba(0, 128, 0, 0.8)',
+                  'rgba(255, 255, 0, 0.9)', 'rgba(255, 0, 255, 0.9)', 'rgba(0, 128, 128, 0.9)',]
 
         fig = go.Figure(data=go.Bar(
             x=x_axis,
@@ -72,7 +75,7 @@ class Plot:
 
     def plot_most_active_users(self):
         users = self.group_specific_analysis.most_active_users()
-        
+
         PlotBarChart(
             x_axis=users['User Name'],
             y_axis=users['Number of Chats'],
@@ -109,7 +112,7 @@ class Plot:
             layout_yaxis='Words',
             orientation='h'
         )
-    
+
     def plot_most_used_emoji(self):
         most_used_emojis = self.analyse.most_used_emojis()
         PlotBarChart(
