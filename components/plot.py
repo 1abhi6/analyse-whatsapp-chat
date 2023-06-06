@@ -33,16 +33,17 @@ class Plot:
     
     def plot_word_cloud(self):
         text = self.analyse.word_cloud()
+        
         # Create a WordCloud object and generate the word cloud
-        wordcloud = WordCloud(background_color='white', colormap='tab20c').generate(text)
+        wordcloud = WordCloud(background_color='white', colormap='tab20c', max_font_size=50, max_words=100).generate(text)
         
         # Set the height and width of the plot
-        plt.figure(figsize=(40, 20))
+        plt.figure(figsize=(10, 5))  # Adjust the figure size as per your preference
         
         # Display the word cloud using matplotlib
         plt.imshow(wordcloud, interpolation='bilinear')
         plt.axis('off')
-        
+
         st.pyplot(plt)
         
     

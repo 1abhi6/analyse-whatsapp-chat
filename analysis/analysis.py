@@ -5,7 +5,7 @@ Created on Sun Jun  4 01:14:22 2023
 @author: Abhishek Santosh Gupta
 """
 import pandas as pd
-
+from collections import Counter
 from urlextract import URLExtract
 
 
@@ -52,20 +52,51 @@ class Analyse(UserList):
             links.extend(self.extract_url.find_urls(message))
 
         return len(links)
-    
+
     def word_cloud(self):
-        self.df = pd.DataFrame(self.df['message'])
+        if self.selected_user != 'Overall':
+            df = self.df[self.df['users'] == self.selected_user]
+
+        df = pd.DataFrame(self.df['message'])
 
         # Combine all the messages into a single string
-        text = ' '.join(self.df['message'].tolist())
-        
+        text = ' '.join(df['message'].tolist())
+
         # Remove '<Media omitted>' from the text
-        text = text.replace('<Media omitted>', '')  
-        
+        text = text.replace('<Media omitted>', '')
+
         return text
 
+    def most_common_words(self):
+        f = open('./dependencies/stop_hinglish.txt', 'r')
+        stop_words = f.read()
 
-class GroupSpecificAnalysis(Analyse):       
+        if self.selected_user != 'Overall':
+            df = self.df[self.df['users'] == self.selected_user]
+
+        df = self.df
+
+        temp = df[df['users'] != 'group_notification']
+        temp = temp[temp['message'] != '<Media omitted>\n']
+        temp = temp[temp['message'] != '<Media omitted>']
+
+        words = []
+
+        for message in temp['message']:
+            for word in message.lower().split():
+                if word not in stop_words:
+                    words.append(word)
+
+        common_words = pd.DataFrame(Counter(words).most_common(20))
+        common_words.rename(columns={
+            0:'Words',
+            1:'Frequency'
+        },inplace=True)
+        
+        return common_words
+
+
+class GroupSpecificAnalysis(Analyse):
     def most_active_users(self):
         users = self.df['users'].value_counts().sort_values(
             ascending=False
@@ -80,7 +111,7 @@ class GroupSpecificAnalysis(Analyse):
 
     def most_active_users_percentage(self):
         users = round((self.df['users'].value_counts(
-            ) / self.df.shape[0]) * 100, 2).reset_index().rename(
+        ) / self.df.shape[0]) * 100, 2).reset_index().rename(
             columns={'index': 'User Name', 'users': 'Chat Percentage'})
-                
+
         return users

@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['app.py', 'components\\group.py', 'analysis\\analysis.py']
+recent_files = ['app.py', 'analysis\\analysis.py', 'components\\__init__.py', 'components\\plot.py']
 
 [main]
 version = 0.2.0
