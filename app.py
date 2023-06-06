@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jun  4 00:39:53 2023
+
+@author: Abhishek Santosh Gupta
+@github: github.com/1abhi6
+"""
+
+
 import streamlit as st
 from abc import ABC, abstractmethod
 
@@ -149,8 +158,6 @@ class Main(Sidebar):
     def plot_most_used_emoji(self):
         st.subheader('Most Used Emojis during Chat',
                      help='Frequently used emojis in chat')
-        df = self.analysis_obj.most_used_emoji()
-        st.dataframe(df)
-
+        self.plot.plot_most_used_emoji()
 if __name__ == '__main__':
     Main()

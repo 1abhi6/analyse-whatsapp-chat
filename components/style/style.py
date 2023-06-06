@@ -3,8 +3,8 @@
 Created on Tue Jun  6 00:13:57 2023
 CSS for custom styling
 
-@author: Abhishek Gupta
-Github: https://github.com/1abhi6
+@author: Abhishek Santosh Gupta
+@github: github.com/1abhi6
 """
 
 

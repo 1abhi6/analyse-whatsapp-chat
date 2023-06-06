@@ -2,7 +2,8 @@
 """
 Created on Mon Jun  5 12:38:27 2023
 
-@author: Abhishek Gupta
+@author: Abhishek Santosh Gupta
+@github: github.com/1abhi6
 """
 
 import streamlit as st
@@ -106,5 +107,16 @@ class Plot:
             layout_title='Most Common Words',
             layout_x_axis='Frequency',
             layout_yaxis='Words',
+            orientation='h'
+        )
+    
+    def plot_most_used_emoji(self):
+        most_used_emojis = self.analyse.most_used_emojis()
+        PlotBarChart(
+            x_axis=most_used_emojis['Frequency'],
+            y_axis=most_used_emojis['Emojis'],
+            layout_title='Most Used Emojis',
+            layout_x_axis='Frequency',
+            layout_yaxis='Emojis',
             orientation='h'
         )

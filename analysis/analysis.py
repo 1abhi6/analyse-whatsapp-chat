@@ -3,6 +3,7 @@
 Created on Sun Jun  4 01:14:22 2023
 
 @author: Abhishek Santosh Gupta
+@github: github.com/1abhi6
 """
 
 import emoji
@@ -97,22 +98,26 @@ class Analyse(UserList):
 
         return common_words
 
-    def most_used_emoji(self):
+    def most_used_emojis(self):
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
         
         df = self.df
         
-
         emojis = []
         for message in df['message']:
             emojis.extend(
                 [c for c in message if c in emoji.UNICODE_EMOJI['en']])
 
-        emoji_df = pd.DataFrame(
+        most_used_emojis = pd.DataFrame(
             Counter(emojis).most_common(len(Counter(emojis))))
+        
+        most_used_emojis.rename(columns={
+            0: 'Emojis',
+            1: 'Frequency'
+        }, inplace=True)
 
-        return emoji_df
+        return most_used_emojis
 
 
 class GroupSpecificAnalysis(Analyse):
@@ -127,6 +132,7 @@ class GroupSpecificAnalysis(Analyse):
         }, inplace=True)
 
         return users
+
 
     def most_active_users_percentage(self):
         users = round((self.df['users'].value_counts(
