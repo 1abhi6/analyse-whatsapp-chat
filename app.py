@@ -94,6 +94,8 @@ class Main(Sidebar):
             self.plot_word_cloud()
             st.divider()
             self.plot_most_common_words()
+            st.divider()
+            self.plot_most_used_emoji()
 
     def quick_metric(self):
         st.subheader('Quick Metrices',
@@ -143,6 +145,12 @@ class Main(Sidebar):
         st.subheader('Most Used Words during Chat',
                      help='Bar chart of frequently used words in chat')
         self.plot.plot_most_common_words()
+    
+    def plot_most_used_emoji(self):
+        st.subheader('Most Used Emojis during Chat',
+                     help='Frequently used emojis in chat')
+        df = self.analysis_obj.most_used_emoji()
+        st.dataframe(df)
 
 if __name__ == '__main__':
     Main()

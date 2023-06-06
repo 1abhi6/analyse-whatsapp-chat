@@ -4,6 +4,8 @@ Created on Sun Jun  4 01:14:22 2023
 
 @author: Abhishek Santosh Gupta
 """
+
+import emoji
 import pandas as pd
 from collections import Counter
 from urlextract import URLExtract
@@ -89,11 +91,28 @@ class Analyse(UserList):
 
         common_words = pd.DataFrame(Counter(words).most_common(20))
         common_words.rename(columns={
-            0:'Words',
-            1:'Frequency'
-        },inplace=True)
-        
+            0: 'Words',
+            1: 'Frequency'
+        }, inplace=True)
+
         return common_words
+
+    def most_used_emoji(self):
+        if self.selected_user != 'Overall':
+            df = self.df[self.df['users'] == self.selected_user]
+        
+        df = self.df
+        
+
+        emojis = []
+        for message in df['message']:
+            emojis.extend(
+                [c for c in message if c in emoji.UNICODE_EMOJI['en']])
+
+        emoji_df = pd.DataFrame(
+            Counter(emojis).most_common(len(Counter(emojis))))
+
+        return emoji_df
 
 
 class GroupSpecificAnalysis(Analyse):
