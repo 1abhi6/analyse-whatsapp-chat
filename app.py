@@ -93,7 +93,7 @@ class Main(Sidebar):
             st.divider()
             self.plot_word_cloud()
             st.divider()
-            self.most_common_words()
+            self.plot_most_common_words()
 
     def quick_metric(self):
         st.subheader('Quick Metrices',
@@ -139,11 +139,10 @@ class Main(Sidebar):
         self.plot.plot_word_cloud()
         
     
-    def most_common_words(self):
-        st.subheader('Most Used Words with Frequency',
-                     help='Table of top 20 frequently used words')
-        most_common_df = self.analysis_obj.most_common_words()
-        st.dataframe(most_common_df)
+    def plot_most_common_words(self):
+        st.subheader('Most Used Words during Chat',
+                     help='Bar chart of frequently used words in chat')
+        self.plot.plot_most_common_words()
 
 if __name__ == '__main__':
     Main()
