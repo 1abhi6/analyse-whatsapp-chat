@@ -136,7 +136,7 @@ class Analyse(UserList):
             df = self.df[self.df['users'] == self.selected_user]
 
         df = self.df
-        
+
         timeline = df.groupby(['year', 'month']).count()[
             'message'].reset_index()
 
@@ -151,21 +151,79 @@ class Analyse(UserList):
         }, inplace=True)
 
         return timeline
-    
+
     def daily_timeline(self):
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
 
         df = self.df
-        
+
         daily_timeline = df.groupby('date').count()['message'].reset_index()
-        
+
         daily_timeline.rename(columns={
             'date': 'Time (Date)',
             'message': 'Number of Messages'
         }, inplace=True)
-        
+
         return daily_timeline
+
+    def most_active_day_of_week(self):
+        if self.selected_user != 'Overall':
+            df = self.df[self.df['users'] == self.selected_user]
+
+        df = self.df
+
+        most_active_day_of_week = df['day_name'].value_counts()
+
+        weekdays = ['Monday', 'Tuesday', 'Wednesday',
+                    'Thursday', 'Friday', 'Saturday', 'Sunday']
+        sorted_series = most_active_day_of_week.reindex(weekdays)
+
+        index_lst = []
+        values_lst = []
+
+        for day, value in sorted_series.items():
+            index_lst.append(day)
+            values_lst.append(value)
+
+        most_active_day_of_week = pd.Series(
+            values_lst, index=index_lst).reset_index()
+
+        most_active_day_of_week.rename(columns={
+            'index': 'Day of the Week',
+            0: 'Number of Messages'
+        }, inplace=True)
+
+        return most_active_day_of_week
+
+    def most_active_month(self):
+        if self.selected_user != 'Overall':
+            df = self.df[self.df['users'] == self.selected_user]
+
+        df = self.df
+
+        most_active_month = df['month'].value_counts()
+
+        months = ["January", "February", "March", "April", "May", "June",
+                  "July", "August", "September", "October", "November", "December"]
+
+        sorted_series = most_active_month.reindex(months)
+
+        index_lst = []
+        values_lst = []
+
+        for day, value in sorted_series.items():
+            index_lst.append(day)
+            values_lst.append(value)
+
+        most_active_month = pd.Series(
+            values_lst, index=index_lst).reset_index()
+        most_active_month.rename(columns={
+            'index': 'Month',
+            0: 'Number of Messages'
+        }, inplace=True)
+
+        return most_active_month
 
 
 class GroupSpecificAnalysis(Analyse):

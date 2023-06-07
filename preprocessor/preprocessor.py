@@ -91,6 +91,7 @@ class Preprocess:
         df['year'] = df['datetime'].dt.year
         df['month'] = df['datetime'].dt.month_name()
         df['day'] = df['datetime'].dt.day
+        df['day_name'] = df['datetime'].dt.day_name()
         df['hour'] = df['datetime'].dt.hour
         df['minute'] = df['datetime'].dt.minute
         df['date'] = df['datetime'].dt.date
