@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jun  4 01:14:22 2023
+WhatsApp Chat Analyzer - Analysis Functions
 
-@author: Abhishek Santosh Gupta
-@github: github.com/1abhi6
+This module contains classes and functions for analyzing WhatsApp chat data in a Streamlit app.
+
+Author: Abhishek Santosh Gupta
+GitHub: github.com/1abhi6
 """
 
 import emoji
@@ -14,11 +16,26 @@ import streamlit as st
 
 
 class UserList:
+    """
+    Class for generating the list of users in the chat data.
+    """
+
     def __init__(self, df):
+        """
+        Initialize the UserList class.
+
+        Args:
+            df (pandas.DataFrame): The chat data as a DataFrame.
+        """
         self.df = df
 
-    # Fetch user list from the dataframe
     def user_list(self):
+        """
+        Fetch the list of users from the dataframe.
+
+        Returns:
+            list: List of users.
+        """
         user_list = self.df['users'].unique().tolist()
         user_list.remove('Group Notification')
         user_list.insert(0, 'Overall')
@@ -27,30 +44,64 @@ class UserList:
 
 
 class Analyse(UserList):
+    """
+    Class for performing various analyses on the WhatsApp chat data.
+    """
+
     def __init__(self, df, selected_user):
+        """
+        Initialize the Analyse class.
+
+        Args:
+            df (pandas.DataFrame): The chat data as a DataFrame.
+            selected_user (str): The selected user for analysis.
+        """
         self.selected_user = selected_user
         super().__init__(df)
         if self.selected_user != 'Overall':
             self.df = self.df[self.df['users'] == self.selected_user]
         self.extract_url = URLExtract()
 
-    # Quick metrics
     def num_messages(self):
+        """
+        Calculate the total number of messages.
+
+        Returns:
+            int: Total number of messages.
+        """
         return self.df.shape[0]
 
     def total_words(self):
+        """
+        Calculate the total number of words.
+
+        Returns:
+            int: Total number of words.
+        """
         words = []
         for message in self.df['message']:
             words.extend(message.split())
         return len(words)
 
     def media_shared(self):
+        """
+        Count the number of media shared.
+
+        Returns:
+            int: Number of media shared.
+        """
         return (self.df[
             (self.df['message'] == '<Media omitted>') |
             (self.df['message'] == '<Media omitted\n>')
         ].shape[0])
 
     def links_shared(self):
+        """
+        Count the number of links shared.
+
+        Returns:
+            int: Number of links shared.
+        """
         links = []
         for message in self.df['message']:
             links.extend(self.extract_url.find_urls(message))
@@ -58,6 +109,12 @@ class Analyse(UserList):
         return len(links)
 
     def word_cloud(self):
+        """
+        Generate the word cloud of frequently used words.
+
+        Returns:
+            str: Text containing all the words.
+        """
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
 
@@ -72,7 +129,12 @@ class Analyse(UserList):
         return text
 
     def most_common_words(self):
+        """
+        Find the most common words in the chat.
 
+        Returns:
+            pandas.DataFrame: DataFrame containing the most common words and their frequencies.
+        """
         try:
             f = open('./dependencies/stop_hinglish.txt', 'r')
             stop_words = f.read()
@@ -111,6 +173,12 @@ class Analyse(UserList):
         return common_words
 
     def most_used_emojis(self):
+        """
+        Find the most used emojis in the chat.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing the most used emojis and their frequencies.
+        """
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
 
@@ -132,6 +200,12 @@ class Analyse(UserList):
         return most_used_emojis.head(20)
 
     def timeline(self):
+        """
+        Generate the timeline of message counts.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing the timeline of message counts.
+        """
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
 
@@ -153,6 +227,12 @@ class Analyse(UserList):
         return timeline
 
     def daily_timeline(self):
+        """
+        Generate the daily timeline of message counts.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing the daily timeline of message counts.
+        """
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
 
@@ -168,6 +248,12 @@ class Analyse(UserList):
         return daily_timeline
 
     def most_active_day_of_week(self):
+        """
+        Find the most active day of the week.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing the most active day of the week and the number of messages on that day.
+        """
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
 
@@ -197,6 +283,12 @@ class Analyse(UserList):
         return most_active_day_of_week
 
     def most_active_month(self):
+        """
+        Find the most active month.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing the most active month and the number of messages in that month.
+        """
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
 
@@ -226,6 +318,12 @@ class Analyse(UserList):
         return most_active_month
 
     def activity_heatmap(self):
+        """
+        Generate the activity heatmap.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing the activity heatmap.
+        """
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
 
@@ -238,7 +336,17 @@ class Analyse(UserList):
 
 
 class GroupSpecificAnalysis(Analyse):
+    """
+    Class for performing group-specific analyses on the WhatsApp chat data.
+    """
+
     def most_active_users(self):
+        """
+        Find the most active users in the group.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing the most active users and the number of chats sent by them.
+        """
         users = self.df['users'].value_counts().sort_values(
             ascending=False
         ).reset_index().head()
@@ -251,6 +359,12 @@ class GroupSpecificAnalysis(Analyse):
         return users
 
     def most_active_users_percentage(self):
+        """
+        Find the percentage of chats sent by each user in the group.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing the user names and their chat percentages.
+        """
         users = round((self.df['users'].value_counts(
         ) / self.df.shape[0]) * 100, 2).reset_index().rename(
             columns={'index': 'User Name', 'users': 'Chat Percentage'})
