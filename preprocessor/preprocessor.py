@@ -86,15 +86,15 @@ class Preprocess:
         # Drop the date column since it is not required
         df.drop(columns='date', inplace=True)
 
-        # Extract year, month, day, hour, and minute from the date
+        # Extract year, month, day, hour, and date from the datetime column
         df['year'] = df['datetime'].dt.year
         df['month'] = df['datetime'].dt.month_name()
         df['day'] = df['datetime'].dt.day
         df['day_name'] = df['datetime'].dt.day_name()
         df['hour'] = df['datetime'].dt.hour
-        df['minute'] = df['datetime'].dt.minute
         df['date'] = df['datetime'].dt.date
-
+        
+        # Add period of an hour as Period column in the df
         period = []
         for hour in df[['day_name', 'hour']]['hour']:
             if hour == 23:
@@ -107,3 +107,4 @@ class Preprocess:
         df['Period'] = period
         
         return df
+    
