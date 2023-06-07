@@ -132,7 +132,12 @@ class Analyse(UserList):
         return most_used_emojis.head(20)
 
     def timeline(self):
-        timeline = self.df.groupby(['year', 'month']).count()[
+        if self.selected_user != 'Overall':
+            df = self.df[self.df['users'] == self.selected_user]
+
+        df = self.df
+        
+        timeline = df.groupby(['year', 'month']).count()[
             'message'].reset_index()
 
         time = []
