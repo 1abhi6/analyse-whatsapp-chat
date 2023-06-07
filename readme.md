@@ -4,6 +4,8 @@
 
 A Python tool to analyze and visualize WhatsApp chat data.
 
+## Project Demonstration
+
 ![Preview](readme_resources/gif_img.gif)
 
 ## Table of Contents
@@ -104,9 +106,21 @@ Here are some examples of the insights you can obtain using WhatsApp Chat Analyz
 
 ![Word Cloud](readme_resources/word_cloud.png)
 
+### Most Active Day
+
+![Activity Timeline](readme_resources/most_active_day.png)
+
+### Most Active Month
+
+![Activity Timeline](readme_resources/most_active_month.png)
+
 ### Most Common Words
 
 ![Most Common Words](readme_resources/most_common_word.png)
+
+### Most Used Emojis
+
+![Most Common Words](readme_resources/most_used_emojis.png)
 
 ### Activity Timeline
 
