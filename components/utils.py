@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jun  7 12:12:13 2023
+WhatsApp Chat Analyzer
 
-@author: Abhishek Santosh Gupta
-@github: github.com/1abhi6
+This script provides classes for analyzing and visualizing WhatsApp chat data in a Streamlit app.
+
+Author: Abhishek Santosh Gupta
+GitHub: github.com/1abhi6
 """
 
 import streamlit as st
@@ -13,7 +15,16 @@ import plotly.graph_objects as go
 
 
 class SubHeader:
+    """Class to display a subheader with a tooltip in the Streamlit app."""
+
     def __init__(self, subheader: str, tooltip: str) -> None:
+        """
+        Initialize the SubHeader class.
+
+        Args:
+            subheader (str): The subheader text.
+            tooltip (str): The tooltip text.
+        """
         st.subheader(subheader, help=tooltip)
 
 
@@ -24,19 +35,20 @@ class PlotBarChart:
             self,
             x_axis: pd.Series,
             y_axis: pd.Series,
-            layout_title,
+            layout_title: str,
             layout_x_axis: str,
-            layout_yaxis: str,
+            layout_y_axis: str,
             orientation: str) -> None:
         """
-        Initialize the PlotHorizontalBarChart class.
+        Initialize the PlotBarChart class.
 
         Args:
             x_axis (pd.Series): The x-axis data.
             y_axis (pd.Series): The y-axis data.
-            layout_title: The title of the chart.
-            layout_x_axis: The label for the x-axis.
-            layout_yaxis: The label for the y-axis.
+            layout_title (str): The title of the chart.
+            layout_x_axis (str): The label for the x-axis.
+            layout_y_axis (str): The label for the y-axis.
+            orientation (str): The orientation of the bars (vertical or horizontal).
         """
 
         # Define a color palette for the bars
@@ -61,7 +73,7 @@ class PlotBarChart:
         fig.update_layout(
             title=layout_title,
             xaxis=dict(title=layout_x_axis),
-            yaxis=dict(title=layout_yaxis)
+            yaxis=dict(title=layout_y_axis)
         )
 
         st.plotly_chart(fig, use_container_width=True)
@@ -70,12 +82,12 @@ class PlotBarChart:
 class PlotLineChart:
     """Class to plot a line chart."""
 
-    def __init__(self, temp_df: pd.DataFrame(), x_axis: str, y_axis: str, layout_title: str) -> None:
+    def __init__(self, temp_df: pd.DataFrame, x_axis: str, y_axis: str, layout_title: str) -> None:
         """
         Initialize the PlotLineChart class.
 
         Args:
-            temp_df (str): The dataframe containing the chart data.
+            temp_df (pd.DataFrame): The dataframe containing the chart data.
             x_axis (str): The column name for the x-axis.
             y_axis (str): The column name for the y-axis.
             layout_title (str): The title of the chart.
@@ -91,7 +103,17 @@ class PlotLineChart:
 
 
 class PlotHeatMap:
-    def __init__(self, pivot_table: pd.DataFrame, x_axis, y_axis):
+    """Class to plot a heat map."""
+
+    def __init__(self, pivot_table: pd.DataFrame, x_axis: str, y_axis: str) -> None:
+        """
+        Initialize the PlotHeatMap class.
+
+        Args:
+            pivot_table (pd.DataFrame): The pivot table data for the heat map.
+            x_axis (str): The label for the x-axis.
+            y_axis (str): The label for the y-axis.
+        """
         heatmap = go.Heatmap(
             x=pivot_table.columns,
             y=pivot_table.index,

@@ -155,9 +155,9 @@ class Main(Sidebar):
                     'The data you provided has fewer metrics to show more about the selected user.')
 
             st.divider()
-
             self.plot.plot_most_used_emoji()
-
+            
+            st.divider()
             self.plot.plot_activity_heatmap()
 
     def quick_metric(self):
