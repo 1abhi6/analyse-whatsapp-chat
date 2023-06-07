@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jun  4 00:39:53 2023
+WhatsApp Chat Analyser
 
-@author: Abhishek Santosh Gupta
-@github: github.com/1abhi6
+This script uses Streamlit to create a web application for analyzing WhatsApp chat data.
+It allows users to upload a text file containing a WhatsApp chat conversation and provides various analysis metrics and visualizations.
+
+Author: Abhishek Santosh Gupta
+GitHub: github.com/1abhi6
 """
-
 
 import streamlit as st
 from abc import ABC, abstractmethod
@@ -25,12 +27,23 @@ from analysis import (
 
 
 class Sidebar(ABC):
+    """
+    Abstract base class for the sidebar of the WhatsApp Chat Analyser web application.
+    """
+
     def __init__(self):
         st.sidebar.title('WhatsApp Chat Analyser')
         self.sidebar()
 
     def sidebar(self):
-        upload_file = st.sidebar.file_uploader('Choose a text file')
+        """
+        Create the sidebar components and functionality.
+        """
+        upload_file = st.sidebar.file_uploader(
+            'Choose a text file',
+            help='Upload a .txt file of chat without media exported from WhatsApp.'
+        )
+        
         if upload_file is not None:
             bytes_data = upload_file.getvalue()
             data = bytes_data.decode('utf-8')
@@ -38,7 +51,6 @@ class Sidebar(ABC):
             try:
                 preprocessor_obj = Preprocess(data)
                 self.df = preprocessor_obj.text_to_df()
-                st.dataframe(self.df)
                 self.user_list_obj = UserList(self.df)
                 users_list = self.user_list_obj.user_list()
 
@@ -49,25 +61,36 @@ class Sidebar(ABC):
                 self.show_analysis_btn()
 
             except Exception as e:
-                # st.sidebar.error(
-                #     'Invalid file format, The file should be Whatsapp exported .txt file.'
-                # )
                 st.sidebar.error(e)
 
     @abstractmethod
     def show_analysis_btn(self):
+        """
+        Abstract method to be implemented by subclasses.
+        Show the button to trigger the analysis.
+        """
         pass
 
 
 class Main(Sidebar):
-    def __init__(self):
+    """
+    Main class for the WhatsApp Chat Analyser web application.
+    """
 
+    def __init__(self):
+        """
+        Initialize the Main class and set the page configuration.
+        """
         # Page configuration
         st.set_page_config(
             layout='wide', page_title="Abhi's WhatsApp Analyser", page_icon='📊')
         super().__init__()
 
     def show_analysis_btn(self):
+        """
+        Override the show_analysis_btn method from the Sidebar class.
+        Show the analysis button and trigger the analysis when clicked.
+        """
         if st.sidebar.button('Show Chat Analysis'):
 
             if not self.selected_user == 'Overall':
@@ -134,13 +157,15 @@ class Main(Sidebar):
             st.divider()
 
             self.plot.plot_most_used_emoji()
-            
+
             self.plot.plot_activity_heatmap()
 
     def quick_metric(self):
-
+        """
+        Show quick metrics of the chat conversation.
+        """
         SubHeader(
-            subheader='Quick Metrices',
+            subheader='Quick Metrics',
             tooltip='Quick overview of the entire chat.'
         )
 
@@ -163,6 +188,9 @@ class Main(Sidebar):
             st.metric(label='Links Shared', value=links_shared)
 
     def plot_most_active_users(self):
+        """
+        Plot the most active users in the chat conversation.
+        """
         if self.selected_user == 'Overall':
             st.divider()
             col1, col2 = st.columns(2)
