@@ -30,15 +30,15 @@ class Plot:
         self.analyse = Analyse(self.df, self.selected_user)
     
     def plot_daily_timeline(self):
-        timeline = self.analyse.daily_timeline()
+        daily_timeline = self.analyse.daily_timeline()
 
         SubHeader(
-            subheader='Chat Timeline Month-Year',
-            tooltip='Chat timeline over the Month-Year.'
+            subheader='Chat Timeline Datewise ',
+            tooltip='Chat timeline over the date.'
         )
 
         PlotLineChart(
-            temp_df=timeline,
+            temp_df=daily_timeline,
             x_axis='Time (Date)',
             y_axis='Number of Messages',
             layout_title='Conversation History'
@@ -48,7 +48,7 @@ class Plot:
         timeline = self.analyse.timeline()
 
         SubHeader(
-            subheader='Chat Timeline Month-Year',
+            subheader='Chat Timeline Month-Year Wise',
             tooltip='Chat timeline over the Month-Year.'
         )
 

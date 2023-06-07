@@ -104,6 +104,9 @@ class Main(Sidebar):
 
             st.divider()
             self.quick_metric()
+            
+            st.divider()
+            self.plot.plot_daily_timeline()
 
             st.divider()
             self.plot.plot_timeline()

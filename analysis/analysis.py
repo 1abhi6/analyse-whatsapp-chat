@@ -157,6 +157,15 @@ class Analyse(UserList):
             df = self.df[self.df['users'] == self.selected_user]
 
         df = self.df
+        
+        daily_timeline = df.groupby('date').count()['message'].reset_index()
+        
+        daily_timeline.rename(columns={
+            'date': 'Time (Date)',
+            'message': 'Number of Messages'
+        }, inplace=True)
+        
+        return daily_timeline
 
 
 class GroupSpecificAnalysis(Analyse):
