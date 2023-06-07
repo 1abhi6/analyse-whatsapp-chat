@@ -1,70 +1,127 @@
-# Abhi's WhatsApp Chat Analyzer
+# WhatsApp Chat Analyzer
 
-## Description
-WhatsApp Chat Analyzer is a Python-based project that allows you to analyze exported text files from WhatsApp chats, whether they are individual or group chats. The project aims to provide insightful analysis and visualizations based on the chat data. It utilizes various libraries such as numpy, pandas, plotly, streamlit, and more to facilitate data manipulation, analysis, and visualization.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/1abhi6/whatsapp-chat-analyzer/blob/main/LICENSE)
 
-**Please Note** : This project is currently under development, and new features and enhancements are being actively added.
+A Python tool to analyze and visualize WhatsApp chat data.
+
+![WhatsApp Chat Analyzer](./images/whatsapp_chat_analyzer.png)
+
+## Table of Contents
+
+- [About](#about)
+- [Features](#features)
+- [Instructions](#instructions)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [License](#license)
+- [Contact](#contact)
+
+## About
+
+WhatsApp Chat Analyzer is a Python tool that allows you to analyze and visualize your WhatsApp chat data. It provides various metrics and insights about your chat history, including message count, word count, media sharing, most common words, most used emojis, activity timeline, and more. The tool is built using Python, Pandas, Streamlit, Emoji, and other libraries.
 
 ## Features
-- Import and parse WhatsApp chat data from exported text files.
-- Identify chat participants and their respective message frequencies.
-- Generate word clouds to visualize commonly used words in the chat.
-- Calculate and display chat statistics such as total messages, average message length, and message distribution.
-- Analyze chat activity patterns based on different timeframes (hourly, daily, weekly, monthly).
-- Create interactive visualizations using plotly to present chat insights.
-- Utilize streamlit for building a user-friendly web interface to interact with the project.
+
+- Calculate total messages and words
+- Identify media shared
+- Extract URLs
+- Generate word cloud
+- Find most common words
+- Analyze emoji usage
+- Create activity timeline
+- Visualize daily message counts
+- Determine the most active day of the week
+- Identify the most active month
+- Generate an activity heatmap
+- Analyze group-specific data (active users, chat percentages)
+
+## Instructions
+
+### How to Generate a .txt File without Media from WhatsApp?
+
+**Note:** Steps are similar in Android or iOS device.
+
+To generate a .txt file without media from the WhatsApp app, you can follow these general steps:
+
+1. Open the WhatsApp Android app on your device.
+
+2. Navigate to the chat you want to export and open it.
+
+3. Tap the three-dot menu icon in the top-right corner of the chat screen.
+
+4. From the menu options, select "More" or "Settings" (the specific option may vary depending on the WhatsApp version).
+
+5. Look for the "Export chat" or similar option and select it. This option allows you to export the chat conversation.
+
+6. Choose whether to include media files or exclude them. In this case, To generate a .txt file without media, select the option to exclude media files.
+
+7. Select the sharing or saving method for the exported file. You can choose to send the file via email, share it through messaging apps, or save it to a cloud storage service.
+
+8. If you choose to save the file, select the destination on your device where you want to save it. Remember the location for later access.
+
+9. Wait for the export process to complete. This may take a few moments depending on the size of the chat and the speed of your device.
+
+Please note that these steps are a general guideline and may vary slightly depending on the version of WhatsApp or any updates made to the app.
 
 ## Installation
-1. Clone the GitHub repository:
 
-   ```bash
+1. Clone the repository:
+
+   ```shell
    git clone https://github.com/1abhi6/analyse-whatsapp-chat.git
    ```
 
-2. Change into the project directory:
+2. Install the required dependencies:
 
-   ```bash
-   cd analyse-whatsapp-chat
-   ```
-
-3. Install the required dependencies using pip:
-
-   ```bash
+   ```shell
    pip install -r requirements.txt
    ```
 
 ## Usage
-1. Export the WhatsApp chat you want to analyze as a text file. This can be done by opening the chat, clicking the three-dot menu, and selecting "More" > "Export chat".
-2. Place the exported text file in the project directory.
-3. Run the project:
 
-   ```bash
+1. Export your WhatsApp chat history as a text file (.txt) following the instructions provided in the [Instructions section](#instructions).
+
+2. The project will be hosted soon.
+
+3. Run the `app.py` script:
+
+   ```shell
    streamlit run app.py
    ```
 
-4. The project will start a local web server and display a URL. Open the provided URL in your web browser to access the WhatsApp Chat Analyzer interface.
-5. Upload the exported text file using the provided interface.
-6. Explore the various analysis options and visualizations available to gain insights into the WhatsApp chat.
+4. Launch the web application by opening the provided local URL in your web browser.
 
-## Roadmap
-The WhatsApp Chat Analyzer project is continuously evolving, and the following features and improvements are planned:
+5. Select the chat file (.txt) and click on Show Chat Analysis button.
 
-- Integration with additional messaging platforms (e.g., Telegram, Facebook Messenger).
-- Deployment
+6. Explore the generated metrics, charts, and insights based on your WhatsApp chat data.
 
-## Contributing
-Contributions to the WhatsApp Chat Analyzer project are welcome! If you have any ideas, bug reports, or feature requests, please open an issue on the GitHub repository. If you'd like to contribute code, feel free to submit a pull request following the standard GitHub workflow.
+## Examples
+
+Here are some examples of the insights you can obtain using WhatsApp Chat Analyzer:
+
+### Word Cloud
+
+![Word Cloud](./images/word_cloud.png)
+
+### Most Common Words
+
+![Most Common Words](./images/most_common_words.png)
+
+### Activity Timeline
+
+![Activity Timeline](./images/activity_timeline.png)
+
+### Daily Message Counts
+
+![Daily Message Counts](./images/daily_message_counts.png)
 
 ## License
-This project is licensed under the [MIT License](LICENSE).
 
-## Acknowledgments
-- The developers of numpy, pandas, plotly, streamlit, and other open-source libraries used in this project.
-- The contributors to the WhatsApp Chat Analyzer project.
-- Inspiration from similar projects and the vibrant open-source community.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more information.
 
 ## Contact
-For any inquiries or feedback, please contact:
-- Abhishek Gupta: [abhi@getifyme.com](mailto:abhi@getifyme.com)
 
-Feel free to reach out with any questions, suggestions, or collaboration opportunities. Happy analyzing!
+For any questions or inquiries, feel free to reach out to me at:
+
+- Website: [Abhishek Gupta](https://abhi.getifyme.com/)
