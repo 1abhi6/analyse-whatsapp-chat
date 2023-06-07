@@ -9,6 +9,7 @@ Created on Mon Jun  5 12:38:27 2023
 import streamlit as st
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from .utils import (
     SubHeader,
@@ -28,7 +29,7 @@ class Plot:
         self.group_specific_analysis = GroupSpecificAnalysis(
             self.df, self.selected_user)
         self.analyse = Analyse(self.df, self.selected_user)
-    
+
     def plot_daily_timeline(self):
         daily_timeline = self.analyse.daily_timeline()
 
@@ -58,7 +59,6 @@ class Plot:
             y_axis='Number of Messages',
             layout_title='Conversation History'
         )
-        
 
     def plot_most_active_users(self):
         users = self.group_specific_analysis.most_active_users()
@@ -127,15 +127,15 @@ class Plot:
             layout_yaxis='Emojis',
             orientation='h'
         )
-        
+
     def plot_most_active_day_of_week(self):
         most_active_day_of_week = self.analyse.most_active_day_of_week()
-        
+
         SubHeader(
             subheader='Most Active Day',
             tooltip='Bar chart of most active day of the week.'
         )
-        
+
         PlotBarChart(
             x_axis=most_active_day_of_week['Day of the Week'],
             y_axis=most_active_day_of_week['Number of Messages'],
@@ -144,16 +144,15 @@ class Plot:
             layout_yaxis='Number of Messages',
             orientation='v'
         )
-        
 
     def plot_most_active_month(self):
         most_active_month = self.analyse.most_active_month()
-        
+
         SubHeader(
             subheader='Most Active Month',
             tooltip='Bar chart of most active month of the year.'
         )
-        
+
         PlotBarChart(
             x_axis=most_active_month['Month'],
             y_axis=most_active_month['Number of Messages'],
@@ -162,3 +161,20 @@ class Plot:
             layout_yaxis='Number of Messages',
             orientation='v'
         )
+
+    def plot_activity_heatmap(self):
+        pivot_table = self.analyse.activity_heatmap()
+        
+        SubHeader(
+            subheader='Most Active Hour wrt Day',
+            tooltip='This heatmap shows at which hour of which day users are active.'
+        )
+        
+        fig, ax = plt.subplots(figsize=(20, 10))
+        
+        sns.heatmap(pivot_table, ax=ax)
+        
+        ax.set_xlabel('Hour')
+        ax.set_ylabel('Day of the Week')
+        
+        st.pyplot(fig)

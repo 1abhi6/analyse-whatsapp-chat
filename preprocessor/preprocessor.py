@@ -43,7 +43,6 @@ class Preprocess:
         - df (pandas.DataFrame): DataFrame containing processed chat data.
         """
 
-
         # Define the pattern to split the data into messages
         pattern = r'\n?\d{2}/\d{2}/\d{2,4},\s\d{1,2}:\d{2}\u202f?(?:am|pm|\d{1,2}:\d{2})\s-\s'
 
@@ -83,10 +82,10 @@ class Preprocess:
         df['users'] = users
         df['message'] = messages
         df.drop(columns=['user_message'], inplace=True)
-        
+
         # Drop the date column since it is not required
         df.drop(columns='date', inplace=True)
-        
+
         # Extract year, month, day, hour, and minute from the date
         df['year'] = df['datetime'].dt.year
         df['month'] = df['datetime'].dt.month_name()
@@ -96,4 +95,15 @@ class Preprocess:
         df['minute'] = df['datetime'].dt.minute
         df['date'] = df['datetime'].dt.date
 
+        period = []
+        for hour in df[['day_name', 'hour']]['hour']:
+            if hour == 23:
+                period.append(str(hour) + "-" + str('00'))
+            elif hour == 0:
+                period.append(str('00') + "-" + str(hour + 1))
+            else:
+                period.append(str(hour) + "-" + str(hour + 1))
+                
+        df['Period'] = period
+        
         return df

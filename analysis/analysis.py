@@ -225,6 +225,17 @@ class Analyse(UserList):
 
         return most_active_month
 
+    def activity_heatmap(self):
+        if self.selected_user != 'Overall':
+            df = self.df[self.df['users'] == self.selected_user]
+
+        df = self.df
+        
+        pivot_table = df.pivot_table(
+            index='day_name', columns='Period', values='message', aggfunc='count').fillna(0)
+        
+        return pivot_table
+
 
 class GroupSpecificAnalysis(Analyse):
     def most_active_users(self):

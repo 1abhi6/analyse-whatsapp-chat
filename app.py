@@ -38,6 +38,7 @@ class Sidebar(ABC):
             try:
                 preprocessor_obj = Preprocess(data)
                 self.df = preprocessor_obj.text_to_df()
+                st.dataframe(self.df)
                 self.user_list_obj = UserList(self.df)
                 users_list = self.user_list_obj.user_list()
 
@@ -133,6 +134,8 @@ class Main(Sidebar):
             st.divider()
 
             self.plot.plot_most_used_emoji()
+            
+            self.plot.plot_activity_heatmap()
 
     def quick_metric(self):
 

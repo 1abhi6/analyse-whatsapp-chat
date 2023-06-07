@@ -88,3 +88,22 @@ class PlotLineChart:
         )
 
         st.plotly_chart(fig, use_container_width=True)
+
+
+class PlotHeatMap:
+    def __init__(self, pivot_table: pd.DataFrame, x_axis, y_axis):
+        heatmap = go.Heatmap(
+            x=pivot_table.columns,
+            y=pivot_table.index,
+            z=pivot_table.values,
+            colorscale='Viridis'
+        )
+
+        layout = go.Layout(
+            title='Funding Amount by Year and Month',
+            xaxis={'title': x_axis},
+            yaxis={'title': y_axis}
+        )
+
+        fig = go.Figure(data=[heatmap], layout=layout)
+        st.plotly_chart(fig, use_container_width=True)
