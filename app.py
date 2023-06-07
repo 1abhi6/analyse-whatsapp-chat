@@ -108,7 +108,7 @@ class Main(Sidebar):
             self.plot.plot_timeline()
             self.plot_most_active_users()
             st.divider()
-            self.plot_word_cloud()
+            self.plot.plot_word_cloud()
             st.divider()
             
             try:
@@ -160,11 +160,6 @@ class Main(Sidebar):
                              help='Most active user with number of chats')
                 self.plot.plot_most_active_users()
 
-    def plot_word_cloud(self):
-        st.subheader('Frequently Used Words',
-                     help='Wrod cloud of frequently used words')
-        self.plot.plot_word_cloud()
-        
     
     def plot_most_common_words(self):
         st.subheader('Most Used Words during Chat',

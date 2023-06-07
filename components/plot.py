@@ -88,6 +88,9 @@ class PlotLineChart:
 
         st.plotly_chart(fig, use_container_width=True)
 
+class SubHeader:
+    def __init__(self,subheader:str,tooltip:str) -> None:
+        st.subheader(subheader,help=tooltip)
 
 class Plot:
     def __init__(self, df, selected_user):
@@ -100,8 +103,11 @@ class Plot:
     def plot_timeline(self):
         timeline = self.analyse.timeline()
         
-        st.subheader('Chat Timeline',
-                     help='Chat timeline over the Month/Year')
+        SubHeader(
+            subheader='Chat Timeline',
+            tooltip='Chat timeline over the Month/Year'
+        )
+        
         PlotLineChart(
             temp_df=timeline,
             x_axis='Time (Month-Year)',
@@ -123,6 +129,11 @@ class Plot:
 
     def plot_word_cloud(self):
         text = self.analyse.word_cloud()
+        
+        SubHeader(
+            subheader='Frequently Used Words',
+            tooltip='Wrod cloud of frequently used words'
+        )
 
         # Create a WordCloud object and generate the word cloud
         wordcloud = WordCloud(background_color='white', colormap='tab20c',
