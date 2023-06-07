@@ -12,17 +12,16 @@ from abc import ABC, abstractmethod
 
 from preprocessor import Preprocess
 from components import (
-        Plot,
-        SubHeader,
-        PADDING_TOP
-    )
+    Plot,
+    SubHeader,
+    PADDING_TOP
+)
 
 from analysis import (
-        Analyse,
-        UserList,
-        GroupSpecificAnalysis
-    )
-
+    Analyse,
+    UserList,
+    GroupSpecificAnalysis
+)
 
 
 class Sidebar(ABC):
@@ -69,7 +68,7 @@ class Main(Sidebar):
 
     def show_analysis_btn(self):
         if st.sidebar.button('Show Chat Analysis'):
-            
+
             if not self.selected_user == 'Overall':
                 col1, col2, col3 = st.columns(3)
                 with col1:
@@ -93,7 +92,7 @@ class Main(Sidebar):
                     # Give custom padding at top
                     st.markdown(PADDING_TOP, unsafe_allow_html=True)
 
-                    st.title('Overall Chat Analysis')
+                    st.title('Overall Analysis')
 
                 with col3:
                     st.write()
@@ -105,29 +104,29 @@ class Main(Sidebar):
 
             st.divider()
             self.quick_metric()
-            
+
             st.divider()
             self.plot.plot_timeline()
-    
+
             self.plot_most_active_users()
             st.divider()
-            
+
             self.plot.plot_word_cloud()
             st.divider()
-            
+
             try:
                 self.plot.plot_most_common_words()
-                
+
             except Exception:
-                st.write('The data you provided has fewer metrics to show more about the selected user.')
-                
+                st.write(
+                    'The data you provided has fewer metrics to show more about the selected user.')
+
             st.divider()
-            
+
             self.plot.plot_most_used_emoji()
-            
 
     def quick_metric(self):
-        
+
         SubHeader(
             subheader='Quick Metrices',
             tooltip='Quick overview of the entire chat.'
@@ -150,7 +149,6 @@ class Main(Sidebar):
         with col4:
             links_shared = self.analysis_obj.links_shared()
             st.metric(label='Links Shared', value=links_shared)
-    
 
     def plot_most_active_users(self):
         if self.selected_user == 'Overall':
@@ -160,19 +158,19 @@ class Main(Sidebar):
                 SubHeader(
                     subheader='Most Active Users (Percentage)',
                     tooltip='Most active user with percentage of chats.'
-                )                
-                
+                )
+
                 users = self.group_specific_analysis.most_active_users_percentage()
                 st.dataframe(users)
-                
+
             with col2:
                 SubHeader(
                     subheader='Most Active Users',
                     tooltip='Most active user with number of chats.'
                 )
 
-                self.plot.plot_most_active_users()    
+                self.plot.plot_most_active_users()
 
-        
+
 if __name__ == '__main__':
     Main()

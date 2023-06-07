@@ -7,87 +7,18 @@ Created on Mon Jun  5 12:38:27 2023
 """
 
 import streamlit as st
-import pandas as pd
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-import plotly.express as px
-import plotly.graph_objects as go
 
-from .utils import SubHeader
-from analysis import Analyse, GroupSpecificAnalysis
-
-
-class PlotBarChart:
-    """Class to plot a bar chart."""
-
-    def __init__(
-            self,
-            x_axis: pd.Series,
-            y_axis: pd.Series,
-            layout_title,
-            layout_x_axis: str,
-            layout_yaxis: str,
-            orientation: str) -> None:
-        """
-        Initialize the PlotHorizontalBarChart class.
-
-        Args:
-            x_axis (pd.Series): The x-axis data.
-            y_axis (pd.Series): The y-axis data.
-            layout_title: The title of the chart.
-            layout_x_axis: The label for the x-axis.
-            layout_yaxis: The label for the y-axis.
-        """
-
-        # Define a color palette for the bars
-        colors = ['rgba(0, 255, 255, 0.6)', 'rgba(0, 0, 255, 0.6)',
-                  'rgba(255, 165, 0, 0.6)', 'rgba(128, 0, 128, 0.6)', 'rgba(0, 128, 0, 0.6)',
-                  'rgba(255, 255, 0, 0.6)', 'rgba(255, 0, 255, 0.6)', 'rgba(0, 128, 128, 0.6)',
-                  'rgba(128, 128, 0, 0.6)', 'rgba(0, 0, 128, 0.6)', 'rgba(128, 0, 0, 0.6)',
-                  'rgba(0, 255, 0, 0.6)', 'rgba(0, 0, 128, 0.6)', 'rgba(255, 0, 0, 0.6)',
-                  'rgba(255, 250, 165, 1)', 'rgba(128, 128, 128, 0.6)', 'rgba(128, 0, 128, 0.6)',
-                  'rgba(255, 255, 0, 0.6)', 'rgba(0, 255, 255, 0.6)', 'rgba(255, 0, 255, 0.6)',
-                  'rgba(0, 255, 255, 0.9)', 'rgba(0, 0, 255, 0.9)', 'rgba(255, 0, 0, 0.9)',
-                  'rgba(255, 165, 0, 0.6)', 'rgba(128, 0, 128, 0.6)', 'rgba(0, 128, 0, 0.8)',
-                  'rgba(255, 255, 0, 0.9)', 'rgba(255, 0, 255, 0.9)', 'rgba(0, 128, 128, 0.9)',]
-
-        fig = go.Figure(data=go.Bar(
-            x=x_axis,
-            y=y_axis,
-            orientation=orientation,
-            marker=dict(color=colors)
-        ))
-
-        fig.update_layout(
-            title=layout_title,
-            xaxis=dict(title=layout_x_axis),
-            yaxis=dict(title=layout_yaxis)
-        )
-
-        st.plotly_chart(fig, use_container_width=True)
-
-
-class PlotLineChart:
-    """Class to plot a line chart."""
-
-    def __init__(self, temp_df: pd.DataFrame(), x_axis: str, y_axis: str, layout_title: str) -> None:
-        """
-        Initialize the PlotLineChart class.
-
-        Args:
-            temp_df (str): The dataframe containing the chart data.
-            x_axis (str): The column name for the x-axis.
-            y_axis (str): The column name for the y-axis.
-            layout_title (str): The title of the chart.
-        """
-        fig = px.line(
-            temp_df,
-            x=x_axis,
-            y=y_axis,
-            title=layout_title
-        )
-
-        st.plotly_chart(fig, use_container_width=True)
+from .utils import (
+    SubHeader,
+    PlotBarChart,
+    PlotLineChart
+)
+from analysis import (
+    Analyse,
+    GroupSpecificAnalysis
+)
 
 
 class Plot:
@@ -100,12 +31,12 @@ class Plot:
 
     def plot_timeline(self):
         timeline = self.analyse.timeline()
-        
+
         SubHeader(
             subheader='Chat Timeline',
             tooltip='Chat timeline over the Month/Year.'
         )
-        
+
         PlotLineChart(
             temp_df=timeline,
             x_axis='Time (Month-Year)',
@@ -127,7 +58,7 @@ class Plot:
 
     def plot_word_cloud(self):
         text = self.analyse.word_cloud()
-        
+
         SubHeader(
             subheader='Frequently Used Words',
             tooltip='Wrod cloud of frequently used words.'
@@ -149,12 +80,12 @@ class Plot:
 
     def plot_most_common_words(self):
         common_words = self.analyse.most_common_words()
-        
+
         SubHeader(
             subheader='Most Used Words during Chat',
             tooltip='Bar chart of frequently used words in chat.'
         )
-        
+
         PlotBarChart(
             x_axis=common_words['Frequency'],
             y_axis=common_words['Words'],
@@ -166,12 +97,12 @@ class Plot:
 
     def plot_most_used_emoji(self):
         most_used_emojis = self.analyse.most_used_emojis()
-        
+
         SubHeader(
             subheader='Most Used Emojis during Chat',
             tooltip='Bar chart of frequently used emojis in chat.'
         )
-        
+
         PlotBarChart(
             x_axis=most_used_emojis['Frequency'],
             y_axis=most_used_emojis['Emojis'],
