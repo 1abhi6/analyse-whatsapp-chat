@@ -4,7 +4,7 @@
 
 A Python tool to analyze and visualize WhatsApp chat data.
 
-![WhatsApp Chat Analyzer](./images/whatsapp_chat_analyzer.png)
+![Preview](notebook\images\gif_img.gif)
 
 ## Table of Contents
 
@@ -19,7 +19,7 @@ A Python tool to analyze and visualize WhatsApp chat data.
 
 ## About
 
-WhatsApp Chat Analyzer is a Python tool that allows you to analyze and visualize your WhatsApp chat data. It provides various metrics and insights about your chat history, including message count, word count, media sharing, most common words, most used emojis, activity timeline, and more. The tool is built using Python, Pandas, Streamlit, Emoji, and other libraries.
+WhatsApp Chat Analyzer is a Python tool that enables you to analyze and visualize your WhatsApp chat data, whether it's a one-to-one chat or a group chat. With this tool, you can also analyze the data for a single person. It provides various metrics and insights about your chat history, including message count, word count, media sharing, most common words, most used emojis, activity timeline, and more. The tool is built using Python, Pandas, Streamlit, Emoji, and other libraries.
 
 ## Features
 
