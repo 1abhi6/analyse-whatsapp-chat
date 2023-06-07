@@ -104,19 +104,19 @@ class Main(Sidebar):
 
             st.divider()
             self.quick_metric()
-            
+
             st.divider()
             self.plot.plot_daily_timeline()
 
             st.divider()
             self.plot.plot_timeline()
-            
+
             st.divider()
             self.plot.plot_most_active_day_of_week()
-            
+
             st.divider()
             self.plot.plot_most_active_month()
-            
+
             self.plot_most_active_users()
             st.divider()
 
@@ -133,7 +133,6 @@ class Main(Sidebar):
             st.divider()
 
             self.plot.plot_most_used_emoji()
-            
 
     def quick_metric(self):
 
