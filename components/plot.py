@@ -10,6 +10,7 @@ import streamlit as st
 import pandas as pd
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import plotly.express as px
 import plotly.graph_objects as go
 
 from analysis import Analyse, GroupSpecificAnalysis
@@ -65,6 +66,29 @@ class PlotBarChart:
         st.plotly_chart(fig, use_container_width=True)
 
 
+class PlotLineChart:
+    """Class to plot a line chart."""
+
+    def __init__(self, temp_df: pd.DataFrame(), x_axis: str, y_axis: str, layout_title: str) -> None:
+        """
+        Initialize the PlotLineChart class.
+
+        Args:
+            temp_df (str): The dataframe containing the chart data.
+            x_axis (str): The column name for the x-axis.
+            y_axis (str): The column name for the y-axis.
+            layout_title (str): The title of the chart.
+        """
+        fig = px.line(
+            temp_df,
+            x=x_axis,
+            y=y_axis,
+            title=layout_title
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+
+
 class Plot:
     def __init__(self, df, selected_user):
         self.df = df
@@ -72,6 +96,18 @@ class Plot:
         self.group_specific_analysis = GroupSpecificAnalysis(
             self.df, self.selected_user)
         self.analyse = Analyse(self.df, self.selected_user)
+
+    def plot_timeline(self):
+        timeline = self.analyse.timeline()
+        
+        st.subheader('Chat Timeline',
+                     help='Chat timeline over the Month/Year')
+        PlotLineChart(
+            temp_df=timeline,
+            x_axis='Time (Month-Year)',
+            y_axis='Number of Messages',
+            layout_title='Conversation History'
+        )
 
     def plot_most_active_users(self):
         users = self.group_specific_analysis.most_active_users()
@@ -115,6 +151,7 @@ class Plot:
 
     def plot_most_used_emoji(self):
         most_used_emojis = self.analyse.most_used_emojis()
+
         PlotBarChart(
             x_axis=most_used_emojis['Frequency'],
             y_axis=most_used_emojis['Emojis'],

@@ -11,11 +11,17 @@ import streamlit as st
 from abc import ABC, abstractmethod
 
 from preprocessor import Preprocess
-from analysis import (Analyse,
-                      UserList,
-                      GroupSpecificAnalysis
-                      )
-from components import Plot, PADDING_TOP
+from components import (
+        Plot,
+        PADDING_TOP
+    )
+
+from analysis import (
+        Analyse,
+        UserList,
+        GroupSpecificAnalysis
+    )
+
 
 
 class Sidebar(ABC):
@@ -98,13 +104,22 @@ class Main(Sidebar):
 
             st.divider()
             self.quick_metric()
+            st.divider()
+            self.plot.plot_timeline()
             self.plot_most_active_users()
             st.divider()
             self.plot_word_cloud()
             st.divider()
-            self.plot_most_common_words()
+            
+            try:
+                self.plot_most_common_words()
+                
+            except Exception:
+                st.write('The data you provided has fewer metrics to show more about the selected user.')
+                
             st.divider()
             self.plot_most_used_emoji()
+            
 
     def quick_metric(self):
         st.subheader('Quick Metrices',
@@ -127,6 +142,7 @@ class Main(Sidebar):
         with col4:
             links_shared = self.analysis_obj.links_shared()
             st.metric(label='Links Shared', value=links_shared)
+    
 
     def plot_most_active_users(self):
         if self.selected_user == 'Overall':
@@ -159,5 +175,9 @@ class Main(Sidebar):
         st.subheader('Most Used Emojis during Chat',
                      help='Frequently used emojis in chat')
         self.plot.plot_most_used_emoji()
+        
+
+        
+        
 if __name__ == '__main__':
     Main()

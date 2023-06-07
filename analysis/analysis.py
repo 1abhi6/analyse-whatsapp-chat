@@ -10,6 +10,7 @@ import emoji
 import pandas as pd
 from collections import Counter
 from urlextract import URLExtract
+import streamlit as st
 
 
 class UserList:
@@ -71,26 +72,37 @@ class Analyse(UserList):
         return text
 
     def most_common_words(self):
-        f = open('./dependencies/stop_hinglish.txt', 'r')
-        stop_words = f.read()
 
-        if self.selected_user != 'Overall':
-            df = self.df[self.df['users'] == self.selected_user]
+        try:
+            f = open('./dependencies/stop_hinglish.txt', 'r')
+            stop_words = f.read()
+        except FileNotFoundError:
+            st.error(
+                'The server is unable to fetch the required file. Please try again later.')
 
-        df = self.df
+        try:
+            if self.selected_user != 'Overall':
+                df = self.df[self.df['users'] == self.selected_user]
 
-        temp = df[df['users'] != 'group_notification']
-        temp = temp[temp['message'] != '<Media omitted>\n']
-        temp = temp[temp['message'] != '<Media omitted>']
+            df = self.df
 
-        words = []
+            temp = df[df['users'] != 'group_notification']
+            temp = temp[temp['message'] != '<Media omitted>\n']
+            temp = temp[temp['message'] != '<Media omitted>']
 
-        for message in temp['message']:
-            for word in message.lower().split():
-                if word not in stop_words:
-                    words.append(word)
+            words = []
 
-        common_words = pd.DataFrame(Counter(words).most_common(20))
+            for message in temp['message']:
+                for word in message.lower().split():
+                    if word not in stop_words:
+                        words.append(word)
+
+            common_words = pd.DataFrame(Counter(words).most_common(20))
+
+        except Exception:
+            st.write(
+                'The data you provided has fewer metrics to show more about the selected user.')
+
         common_words.rename(columns={
             0: 'Words',
             1: 'Frequency'
@@ -101,9 +113,9 @@ class Analyse(UserList):
     def most_used_emojis(self):
         if self.selected_user != 'Overall':
             df = self.df[self.df['users'] == self.selected_user]
-        
+
         df = self.df
-        
+
         emojis = []
         for message in df['message']:
             emojis.extend(
@@ -111,13 +123,29 @@ class Analyse(UserList):
 
         most_used_emojis = pd.DataFrame(
             Counter(emojis).most_common(len(Counter(emojis))))
-        
+
         most_used_emojis.rename(columns={
             0: 'Emojis',
             1: 'Frequency'
         }, inplace=True)
 
         return most_used_emojis.head(20)
+
+    def timeline(self):
+        timeline = self.df.groupby(['year', 'month']).count()[
+            'message'].reset_index()
+
+        time = []
+        for i in range(timeline.shape[0]):
+            time.append(timeline['month'][i] + '-' + str(timeline['year'][i]))
+        timeline['time'] = time
+
+        timeline.rename(columns={
+            'time': 'Time (Month-Year)',
+            'message': 'Number of Messages'
+        }, inplace=True)
+
+        return timeline
 
 
 class GroupSpecificAnalysis(Analyse):
@@ -132,7 +160,6 @@ class GroupSpecificAnalysis(Analyse):
         }, inplace=True)
 
         return users
-
 
     def most_active_users_percentage(self):
         users = round((self.df['users'].value_counts(
