@@ -64,7 +64,7 @@ class Preprocess:
         })
 
         # Convert the date column to datetime format
-        df['date'] = pd.to_datetime(
+        df['datetime'] = pd.to_datetime(
             df['date'], format='%d/%m/%y, %I:%M\u202f%p')
 
         # Separate users and messages
@@ -85,11 +85,11 @@ class Preprocess:
         df.drop(columns=['user_message'], inplace=True)
 
         # Extract year, month, day, hour, and minute from the date
-        df['year'] = df['date'].dt.year
-        df['month'] = df['date'].dt.month_name()
-        df['day'] = df['date'].dt.day
-        df['hour'] = df['date'].dt.hour
-        df['minute'] = df['date'].dt.minute
+        df['year'] = df['datetime'].dt.year
+        df['month'] = df['datetime'].dt.month_name()
+        df['day'] = df['datetime'].dt.day
+        df['hour'] = df['datetime'].dt.hour
+        df['minute'] = df['datetime'].dt.minute
 
         # Drop the date column since it is not required
         df.drop(columns='date', inplace=True)

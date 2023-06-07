@@ -151,6 +151,12 @@ class Analyse(UserList):
         }, inplace=True)
 
         return timeline
+    
+    def daily_timeline(self):
+        if self.selected_user != 'Overall':
+            df = self.df[self.df['users'] == self.selected_user]
+
+        df = self.df
 
 
 class GroupSpecificAnalysis(Analyse):

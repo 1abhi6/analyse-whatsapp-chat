@@ -28,13 +28,28 @@ class Plot:
         self.group_specific_analysis = GroupSpecificAnalysis(
             self.df, self.selected_user)
         self.analyse = Analyse(self.df, self.selected_user)
+    
+    def plot_daily_timeline(self):
+        timeline = self.analyse.daily_timeline()
+
+        SubHeader(
+            subheader='Chat Timeline Month-Year',
+            tooltip='Chat timeline over the Month-Year.'
+        )
+
+        PlotLineChart(
+            temp_df=timeline,
+            x_axis='Time (Date)',
+            y_axis='Number of Messages',
+            layout_title='Conversation History'
+        )
 
     def plot_timeline(self):
         timeline = self.analyse.timeline()
 
         SubHeader(
-            subheader='Chat Timeline',
-            tooltip='Chat timeline over the Month/Year.'
+            subheader='Chat Timeline Month-Year',
+            tooltip='Chat timeline over the Month-Year.'
         )
 
         PlotLineChart(
@@ -43,6 +58,7 @@ class Plot:
             y_axis='Number of Messages',
             layout_title='Conversation History'
         )
+        
 
     def plot_most_active_users(self):
         users = self.group_specific_analysis.most_active_users()
