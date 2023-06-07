@@ -102,19 +102,16 @@ Here are some examples of the insights you can obtain using WhatsApp Chat Analyz
 
 ### Word Cloud
 
-![Word Cloud](./images/word_cloud.png)
+![Word Cloud](readme_resources/word_cloud.png)
 
 ### Most Common Words
 
-![Most Common Words](./images/most_common_words.png)
+![Most Common Words](readme_resources/most_common_word.png)
 
 ### Activity Timeline
 
-![Activity Timeline](./images/activity_timeline.png)
-
-### Daily Message Counts
-
-![Daily Message Counts](./images/daily_message_counts.png)
+![Activity Timeline](readme_resources/timeline_1.png)
+![Activity Timeline](readme_resources/timeline_2.png)
 
 ## License
 
