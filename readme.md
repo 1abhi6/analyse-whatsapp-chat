@@ -5,6 +5,7 @@
 A Python tool to analyze and visualize WhatsApp chat data.
 
 ![Preview](readme_resources/gif_img.gif)
+[![Video Title](http://img.youtube.com/vi/UOU-Larlvos/0.jpg)](https://www.youtube.com/watch?v=UOU-Larlvos)
 
 ## Table of Contents
 
