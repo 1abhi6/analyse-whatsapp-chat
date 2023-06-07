@@ -80,15 +80,12 @@ class Plot:
             tooltip='Wrod cloud of frequently used words.'
         )
 
-        # Create a WordCloud object and generate the word cloud
         wordcloud = WordCloud(background_color='white', colormap='tab20c',
                               max_font_size=50, max_words=100).generate(text)
 
-        # Set the height and width of the plot
-        # Adjust the figure size as per your preference
+
         plt.figure(figsize=(10, 5))
 
-        # Display the word cloud using matplotlib
         plt.imshow(wordcloud, interpolation='bilinear')
         plt.axis('off')
 
@@ -162,6 +159,7 @@ class Plot:
             orientation='v'
         )
 
+    # TODO: Make this heatmap interactive.
     def plot_activity_heatmap(self):
         pivot_table = self.analyse.activity_heatmap()
         
