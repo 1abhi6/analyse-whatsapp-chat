@@ -13,6 +13,7 @@ from abc import ABC, abstractmethod
 from preprocessor import Preprocess
 from components import (
         Plot,
+        SubHeader,
         PADDING_TOP
     )
 
@@ -104,26 +105,33 @@ class Main(Sidebar):
 
             st.divider()
             self.quick_metric()
+            
             st.divider()
             self.plot.plot_timeline()
+    
             self.plot_most_active_users()
             st.divider()
+            
             self.plot.plot_word_cloud()
             st.divider()
             
             try:
-                self.plot_most_common_words()
+                self.plot.plot_most_common_words()
                 
             except Exception:
                 st.write('The data you provided has fewer metrics to show more about the selected user.')
                 
             st.divider()
-            self.plot_most_used_emoji()
+            
+            self.plot.plot_most_used_emoji()
             
 
     def quick_metric(self):
-        st.subheader('Quick Metrices',
-                     help='Quick overview of the entire chat')
+        
+        SubHeader(
+            subheader='Quick Metrices',
+            tooltip='Quick overview of the entire chat.'
+        )
 
         col1, col2, col3, col4 = st.columns(4)
 
@@ -149,30 +157,22 @@ class Main(Sidebar):
             st.divider()
             col1, col2 = st.columns(2)
             with col1:
-                st.subheader('Most Active Users (Percentage)',
-                             help='Most active user with percentage of chats')
-
+                SubHeader(
+                    subheader='Most Active Users (Percentage)',
+                    tooltip='Most active user with percentage of chats.'
+                )                
+                
                 users = self.group_specific_analysis.most_active_users_percentage()
                 st.dataframe(users)
                 
             with col2:
-                st.subheader('Most Active Users',
-                             help='Most active user with number of chats')
-                self.plot.plot_most_active_users()
+                SubHeader(
+                    subheader='Most Active Users',
+                    tooltip='Most active user with number of chats.'
+                )
 
-    
-    def plot_most_common_words(self):
-        st.subheader('Most Used Words during Chat',
-                     help='Bar chart of frequently used words in chat')
-        self.plot.plot_most_common_words()
-    
-    def plot_most_used_emoji(self):
-        st.subheader('Most Used Emojis during Chat',
-                     help='Frequently used emojis in chat')
-        self.plot.plot_most_used_emoji()
-        
+                self.plot.plot_most_active_users()    
 
-        
         
 if __name__ == '__main__':
     Main()

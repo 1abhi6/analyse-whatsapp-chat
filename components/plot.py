@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
 
+from .utils import SubHeader
 from analysis import Analyse, GroupSpecificAnalysis
 
 
@@ -44,7 +45,7 @@ class PlotBarChart:
                   'rgba(255, 255, 0, 0.6)', 'rgba(255, 0, 255, 0.6)', 'rgba(0, 128, 128, 0.6)',
                   'rgba(128, 128, 0, 0.6)', 'rgba(0, 0, 128, 0.6)', 'rgba(128, 0, 0, 0.6)',
                   'rgba(0, 255, 0, 0.6)', 'rgba(0, 0, 128, 0.6)', 'rgba(255, 0, 0, 0.6)',
-                  'rgba(255, 255, 255, 0.6)', 'rgba(128, 128, 128, 0.6)', 'rgba(128, 0, 128, 0.6)',
+                  'rgba(255, 250, 165, 1)', 'rgba(128, 128, 128, 0.6)', 'rgba(128, 0, 128, 0.6)',
                   'rgba(255, 255, 0, 0.6)', 'rgba(0, 255, 255, 0.6)', 'rgba(255, 0, 255, 0.6)',
                   'rgba(0, 255, 255, 0.9)', 'rgba(0, 0, 255, 0.9)', 'rgba(255, 0, 0, 0.9)',
                   'rgba(255, 165, 0, 0.6)', 'rgba(128, 0, 128, 0.6)', 'rgba(0, 128, 0, 0.8)',
@@ -88,9 +89,6 @@ class PlotLineChart:
 
         st.plotly_chart(fig, use_container_width=True)
 
-class SubHeader:
-    def __init__(self,subheader:str,tooltip:str) -> None:
-        st.subheader(subheader,help=tooltip)
 
 class Plot:
     def __init__(self, df, selected_user):
@@ -105,7 +103,7 @@ class Plot:
         
         SubHeader(
             subheader='Chat Timeline',
-            tooltip='Chat timeline over the Month/Year'
+            tooltip='Chat timeline over the Month/Year.'
         )
         
         PlotLineChart(
@@ -132,7 +130,7 @@ class Plot:
         
         SubHeader(
             subheader='Frequently Used Words',
-            tooltip='Wrod cloud of frequently used words'
+            tooltip='Wrod cloud of frequently used words.'
         )
 
         # Create a WordCloud object and generate the word cloud
@@ -151,6 +149,12 @@ class Plot:
 
     def plot_most_common_words(self):
         common_words = self.analyse.most_common_words()
+        
+        SubHeader(
+            subheader='Most Used Words during Chat',
+            tooltip='Bar chart of frequently used words in chat.'
+        )
+        
         PlotBarChart(
             x_axis=common_words['Frequency'],
             y_axis=common_words['Words'],
@@ -162,7 +166,12 @@ class Plot:
 
     def plot_most_used_emoji(self):
         most_used_emojis = self.analyse.most_used_emojis()
-
+        
+        SubHeader(
+            subheader='Most Used Emojis during Chat',
+            tooltip='Bar chart of frequently used emojis in chat.'
+        )
+        
         PlotBarChart(
             x_axis=most_used_emojis['Frequency'],
             y_axis=most_used_emojis['Emojis'],

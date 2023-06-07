@@ -1,2 +1,3 @@
-from components.plot import Plot
-from components.style.style import PADDING_TOP
+from .plot import Plot
+from .utils import SubHeader
+from .style.style import PADDING_TOP
