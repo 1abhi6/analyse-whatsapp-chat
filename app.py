@@ -114,8 +114,8 @@ class Main(Sidebar):
             st.divider()
             self.plot.plot_most_active_day_of_week()
             
-            # st.divider()
-            # self.plot.plot_most_active_month()
+            st.divider()
+            self.plot.plot_most_active_month()
             
             self.plot_most_active_users()
             st.divider()
