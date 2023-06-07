@@ -4,7 +4,7 @@
 
 A Python tool to analyze and visualize WhatsApp chat data.
 
-![Preview](notebook\images\gif_img.gif)
+![Preview](readme_resources/gif_img.gif)
 
 ## Table of Contents
 
