@@ -13,6 +13,16 @@ import pandas as pd
 from collections import Counter
 from urlextract import URLExtract
 import streamlit as st
+from functools import wraps
+
+
+def filter_selected_user(func):
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        if self.selected_user != 'Overall':
+            self.df = self.df[self.df['users'] == self.selected_user]
+        return func(self, *args, **kwargs)
+    return wrapper
 
 
 class UserList:
