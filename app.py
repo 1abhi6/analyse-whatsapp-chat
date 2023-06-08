@@ -43,7 +43,7 @@ class Sidebar(ABC):
             'Choose a text file',
             help='Upload a .txt file of chat without media exported from WhatsApp.'
         )
-        
+
         if upload_file is not None:
             bytes_data = upload_file.getvalue()
             data = bytes_data.decode('utf-8')
@@ -156,7 +156,7 @@ class Main(Sidebar):
 
             st.divider()
             self.plot.plot_most_used_emoji()
-            
+
             st.divider()
             self.plot.plot_activity_heatmap()
 

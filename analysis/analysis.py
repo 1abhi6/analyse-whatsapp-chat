@@ -328,10 +328,10 @@ class Analyse(UserList):
             df = self.df[self.df['users'] == self.selected_user]
 
         df = self.df
-        
+
         pivot_table = df.pivot_table(
             index='day_name', columns='Period', values='message', aggfunc='count').fillna(0)
-        
+
         return pivot_table
 
 
