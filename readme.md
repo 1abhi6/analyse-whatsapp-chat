@@ -29,9 +29,9 @@ WhatsApp Chat Analyzer is a Python tool that enables you to analyze and visualiz
 - Identify media shared
 - Extract URLs
 - Generate word cloud
-- Find most common words
+- Find the most common words
 - Analyze emoji usage
-- Create activity timeline
+- Create an activity timeline
 - Visualize daily message counts
 - Determine the most active day of the week
 - Identify the most active month
@@ -66,7 +66,7 @@ WhatsApp Chat Analyzer is a Python tool that enables you to analyze and visualiz
 
 4. Launch the web application by opening the provided local URL in your web browser.
 
-5. Select the chat file (.txt) and click on Show Chat Analysis button.
+5. Select the chat file (.txt) and click on the Show Chat Analysis button.
 
 6. Explore the generated metrics, charts, and insights based on your WhatsApp chat data.
 
@@ -74,7 +74,7 @@ WhatsApp Chat Analyzer is a Python tool that enables you to analyze and visualiz
 
 ### How to Generate a .txt File without Media from WhatsApp?
 
-**Note:** Steps are similar in Android or iOS device.
+**Note:** Steps are similar in Android or iOS devices.
 
 To generate a .txt file without media from the WhatsApp app, you can follow these general steps:
 
@@ -135,4 +135,4 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 
 For any questions or inquiries, feel free to reach out to me at:
 
-- Website: [Abhishek Gupta](https://abhi.getifyme.com/)
+- Linkedin: [Abhishek Gupta](https://www.linkedin.com/in/codeabhi/)
